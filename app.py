@@ -1,4 +1,4 @@
-from quart import Quart, render_template, websocket
+from quart import Quart, render_template, websocket, route_cors
 import asyncio
 import time
 
@@ -11,6 +11,7 @@ async def hello():
 
 
 @app.route('/api')
+@route_cors()
 async def json():
     time.sleep(5)
     return {"hello": "world"}
@@ -21,9 +22,6 @@ async def ws():
     while True:
         data = await websocket.receive()
         await websocket.send(f"received: {data}")
-
-# if __name__ == "__main__":
-#     app.run()
 
 
 if __name__ == "__main__":
